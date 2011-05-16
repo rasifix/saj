@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Bundle-Version: 0.0.1
+Bundle-Name: SAJ - Simple API for JSON
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.github.rasifix.saj
+Export-Package: com.github.rasifix.saj;version="0.0.1"

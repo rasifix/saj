@@ -23,6 +23,11 @@ import org.antlr.runtime.ANTLRReaderStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 
+/**
+ * 
+ * 
+ * @author rasifix
+ */
 public class JsonReader {
 	
 	private final JsonContentHandler handler;
@@ -34,10 +39,23 @@ public class JsonReader {
 		this.handler = handler;
 	}
 	
+	/**
+	 * Parse a String containing JSON.
+	 * 
+	 * @param json the JSON expression
+	 * @throws IOException if reading fails
+	 */
 	public void parseJson(String json) throws IOException {
 		parseJson(new StringReader(json));
 	}
 	
+	/**
+	 * Parse JSON from the given reader. The reader will not be closed by this
+	 * method.
+	 * 
+	 * @param reader the Reader from which to parse JSON
+	 * @throws IOException if reading from the Reader fails
+	 */
 	public void parseJson(Reader reader) throws IOException {
         JSONLexer lexer = new JSONLexer(new ANTLRReaderStream(reader));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -50,7 +68,6 @@ public class JsonReader {
         } catch (RecognitionException e) {
             throw new RuntimeException(e);
         }
-
 	}
 	
 }
