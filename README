@@ -3,7 +3,7 @@ SAJ is to JSON what SAX is to XML
 "I just needed a very simple JSON parser. That's how SAJ came to live."
 
 = Usage =
-JsonContentHandler contentHandler = new SimpleContentHandler();
+SimpleContentHandler contentHandler = new SimpleContentHandler();
 JsonReader reader = new JsonReader(contentHandler);
 reader.parseJson("[1,2,3]");
 List<Object> result = (List<Object>) contentHandler.getResult();
