@@ -1,0 +1,8 @@
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.github.rasifix.saj
+Bundle-Name: Simple API for JSON processing
+Bundle-Vendor: Simon Raess
+Import-Bundle: com.springsource.org.antlr.runtime;version="[3.1.3,4.0.0)"
+Excluded-Exports: com.github.rasifix.saj.internal
+Bundle-Version: 0.0.1
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
