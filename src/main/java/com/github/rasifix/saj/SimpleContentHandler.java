@@ -20,6 +20,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * JsonContentHandler that builds Maps and Lists for JSON objects and JSON arrays.
+ *  
+ * @author rasifix
+ */
 public class SimpleContentHandler implements JsonContentHandler {
 
 	private Object result;
@@ -86,6 +91,11 @@ public class SimpleContentHandler implements JsonContentHandler {
 
 	@Override
 	public void value(double number) {
+		this.state.value(number);
+	}
+
+	@Override
+	public void value(int number) {
 		this.state.value(number);
 	}
 

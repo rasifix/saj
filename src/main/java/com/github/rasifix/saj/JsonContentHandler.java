@@ -71,9 +71,11 @@ public interface JsonContentHandler {
 	
 	void value(String value);
 	
-	void value(double number);
+	void value(double value);
 	
-	void value(boolean bool);
+	void value(int value);
+	
+	void value(boolean value);
 	
 	void nullValue();
 

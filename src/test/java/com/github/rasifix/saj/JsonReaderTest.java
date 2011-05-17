@@ -9,9 +9,6 @@ import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.github.rasifix.saj.JsonContentHandler;
-import com.github.rasifix.saj.JsonReader;
-
 public class JsonReaderTest {
 
 	private JsonContentHandler handler;
@@ -52,7 +49,7 @@ public class JsonReaderTest {
 	public void testParseObject() throws Exception {
 		startObject();
 		startMember("foo");
-		value(1.0);
+		value(1);
 		endMember();
 		endObject();
 		
@@ -64,11 +61,11 @@ public class JsonReaderTest {
 		startObject();
 			startMember("a");
 				startArray();
-					value(1.0);
-					value(2.0);
+					value(1);
+					value(2);
 					startArray();
-						value(3.0);
-						value(4.0);
+						value(3);
+						value(4);
 						startObject();
 							startMember("x");
 								nullValue();
@@ -79,7 +76,7 @@ public class JsonReaderTest {
 						startMember("b");
 							startObject();
 								startMember("c");
-									value(1.0);
+									value(1);
 								endMember();
 								startMember("d");
 									startArray();
@@ -130,6 +127,10 @@ public class JsonReaderTest {
 	}
 	
 	private void value(double value) {
+		handler.value(value);
+	}
+	
+	private void value(int value) {
 		handler.value(value);
 	}
 	

@@ -23,6 +23,9 @@ import org.antlr.runtime.ANTLRReaderStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 
+import com.github.rasifix.saj.internal.JSONLexer;
+import com.github.rasifix.saj.internal.JSONParser;
+
 /**
  * 
  * 
