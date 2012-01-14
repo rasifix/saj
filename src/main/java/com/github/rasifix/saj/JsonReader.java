@@ -15,7 +15,10 @@
  */
 package com.github.rasifix.saj;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 
@@ -53,6 +56,20 @@ public class JsonReader {
 	}
 	
 	/**
+	 * Parse JSON from the given {@link InputStream}. The encoding
+	 * is detected according to RFC4627 section 3.
+	 * 
+	 * @param inputStream the input stream from which to read
+	 * @throws IOException if reading fails
+	 */
+	public void parseJson(InputStream inputStream) throws IOException {
+		final BufferedInputStream stream = new BufferedInputStream(inputStream);
+		final String encoding = detectEncoding(stream);
+		final Reader reader = new InputStreamReader(stream, encoding);
+		parseJson(reader);
+	}
+	
+	/**
 	 * Parse JSON from the given reader. The reader will not be closed by this
 	 * method.
 	 * 
@@ -72,5 +89,34 @@ public class JsonReader {
             throw new RuntimeException(e);
         }
 	}
-	
+
+	private String detectEncoding(InputStream stream) throws IOException {
+		stream.mark(4);
+
+		byte[] buf = new byte[4];
+		int len = stream.read(buf);
+
+		// xx xx xx xx UTF-8
+		String encoding = "UTF-8";
+		if (len == 4) {
+			if (buf[0] == 0 && buf[1] == 0 && buf[2] == 0) {
+				// 00 00 00 xx UTF-32BE
+				encoding = "UTF-32BE";
+			} else if (buf[0] == 0 && buf[1] == 0 && buf[2] == 0) {
+				// 00 xx 00 xx UTF-16BE
+				encoding = "UTF-16BE";
+			} else if (buf[1] == 0 && buf[2] == 0 && buf[3] == 0) {
+				// xx 00 00 00 UTF-32LE
+				encoding = "UTF-32LE";
+			} else if (buf[1] == 0 && buf[1] == 0 && buf[3] == 0) {
+				// xx 00 xx 00 UTF-16LE
+				encoding = "UTF-16LE";
+			}
+		}
+
+		stream.reset();
+
+		return encoding;
+	}
+
 }
