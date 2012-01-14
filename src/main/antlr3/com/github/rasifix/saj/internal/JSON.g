@@ -71,12 +71,8 @@ catch (RecognitionException e) {
 }
 } 
 
-NUMBER	
-	:	'-'? DIGIT+ ('.' DIGIT+)?
-	;
-
-fragment DIGIT
-	:	'0'..'9'
+NUMBER
+	:	'-'? ('0' | '1'..'9' '0'..'9'*) ('.' '0'..'9'+)? (('e'|'E')('+'|'-')? '0'..'9'+)?
 	;
 	
 BOOLEAN
@@ -97,9 +93,6 @@ STRING
 
 CHAR:  '\'' ( ESC_SEQ | ~('\''|'\\') ) '\''
     ;
-
-fragment
-EXPONENT : ('e'|'E') ('+'|'-')? ('0'..'9')+ ;
 
 fragment
 HEX_DIGIT : ('0'..'9'|'a'..'f'|'A'..'F') ;
@@ -167,19 +160,10 @@ value
 	;
 
 number
-	: n=NUMBER { Pattern.matches("(0|(-?[1-9]\\d*))(\\.\\d+)?", $n.getText())}?
-	  exp=EXPONENT?
+	: n=NUMBER 
 	  { 
 	  	String number = $n.getText();
-	  	if ($exp == null) {
-	  		if (number.indexOf('.') == -1) {
-	  			handler.value(Integer.parseInt(number));
-	  		} else {
-	  			handler.value(Double.parseDouble(number));
-	  		}
-	  	} else {
-	  		handler.value(Double.parseDouble($n.getText() + $exp.getText())); 
-	  	}
+  		handler.value(Double.parseDouble($n.getText())); 
 	  }	
 	;
 

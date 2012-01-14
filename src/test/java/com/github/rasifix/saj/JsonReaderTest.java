@@ -32,6 +32,12 @@ public class JsonReaderTest {
 		reader.parseJson(new StringReader(json));
 		verify();
 	}
+	
+	@Test
+	public void testParseDoubles() throws Exception {
+		value(1.0e+6);
+		parse("1.0e+6");
+	}
 
 	@Test
 	public void testParseArray() throws Exception {
@@ -49,7 +55,7 @@ public class JsonReaderTest {
 	public void testParseObject() throws Exception {
 		startObject();
 		startMember("foo");
-		value(1);
+		value(1.0);
 		endMember();
 		endObject();
 		
@@ -61,11 +67,11 @@ public class JsonReaderTest {
 		startObject();
 			startMember("a");
 				startArray();
-					value(1);
-					value(2);
+					value(1.0);
+					value(2.0);
 					startArray();
-						value(3);
-						value(4);
+						value(3.0);
+						value(4.0);
 						startObject();
 							startMember("x");
 								nullValue();
@@ -76,7 +82,7 @@ public class JsonReaderTest {
 						startMember("b");
 							startObject();
 								startMember("c");
-									value(1);
+									value(1.0);
 								endMember();
 								startMember("d");
 									startArray();
